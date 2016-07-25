@@ -35,10 +35,23 @@
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
     <%= javascript_include_tag "application" %>
+     <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="sticky-footer-navbar.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
   </head>
   <body>
 
-    <div class="navbar navbar-default navbar-static-top">
+    <div class="navbar navbar-inverse">
       <div class="container">
         <%= render 'layouts/authentication' %>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -71,12 +84,13 @@
           </div><!--/.well -->
         </div><!--/span-->
       </div><!--/row-->
-
-      <footer>
-        <p>&copy; Company 2016</p>
-      </footer>
-
     </div> <!-- /container -->
-
+   
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+      </div>
+    </footer>
+  
   </body>
 </html>
