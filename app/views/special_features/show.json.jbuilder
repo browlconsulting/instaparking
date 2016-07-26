@@ -1,0 +1,1 @@
+json.partial! "special_features/special_feature", special_feature: @special_feature
