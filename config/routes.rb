@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :special_features
   resources :ubigeos
+  resources :ubigeos
+  resources :special_features
+  resources :ubigeos
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :profiles, only: [:edit, :update]
   devise_for :users

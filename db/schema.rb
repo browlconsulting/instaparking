@@ -38,6 +38,16 @@ ActiveRecord::Schema.define(version: 20160725215006) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "user_interactions", force: :cascade do |t|
+    t.text     "question",      limit: 65535
+    t.text     "answer",        limit: 65535
+    t.integer  "parkinglot_id", limit: 4
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "user_interactions", ["parkinglot_id"], name: "index_user_interactions_on_parkinglot_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
