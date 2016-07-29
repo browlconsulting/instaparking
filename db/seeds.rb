@@ -50,3 +50,8 @@ Ubigeo.create(district: 'Villa María del Triunfo', department: 'Lima')
 SpecialFeature.create(name: 'Camera', description: 'Video cam recorder')
 SpecialFeature.create(name: 'Security Agent', description: 'Security personnel')
 
+Nearby.create(name: 'Airport', description: 'Parking lot nearby airport')
+Nearby.create(name: 'Stadium', description: 'Parking lot nearby stadiums')
+Nearby.create(name: 'Theater', description: 'Parking lot nearby theaters')
+Nearby.create(name: 'Transportation', description: 'Parking lot nearby transportation for inside the country')
+

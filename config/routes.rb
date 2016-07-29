@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :nearbies
   resources :special_features
   resources :ubigeos
   resources :ubigeos
