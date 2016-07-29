@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @nearby.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @nearby.description %>
+</p>
+
+<%= link_to 'Edit', edit_nearby_path(@nearby) %> |
+<%= link_to 'Back', nearbies_path %>

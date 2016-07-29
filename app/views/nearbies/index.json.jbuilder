@@ -1,0 +1,1 @@
+json.array! @nearbies, partial: 'nearbies/nearby', as: :nearby

@@ -1,0 +1,1 @@
+json.partial! "nearbies/nearby", nearby: @nearby
