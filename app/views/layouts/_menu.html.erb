@@ -1,6 +1,8 @@
 <li><%= link_to "Home", root_path  %></li>
 <li><%= link_to "Search", pages_search_path  %></li>
-<li><%= link_to "Be promoted", pages_be_promoted_path  %></li>
+<% if current_user then %>
+    <li><%= link_to "Be promoted", pages_be_promoted_path  %></li>
+<% end %>
 <li><%= link_to "About us", pages_about_us_path  %></li>
 <li><%= link_to "FAQ", pages_faq_path  %></li>
 <li><%= link_to "Terms of Service", pages_tos_path  %></li>
