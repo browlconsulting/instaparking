@@ -11,7 +11,29 @@
           <label>Distrito</label> <br />
             <%= collection_select(:lang_id, 0, Ubigeo.all, :id, :district) %> 
     </div>
+    
+        <div class="field">
+          <label>Cerca de: </label> <br />
+            <%= collection_select(:lang_id, 0, Nearby.all, :id, :name) %> 
     </div>
+
+
+    <strong>Otras opciones:</strong>
+    
+    <div class="checkbox">
+            <label for="camera">
+            <input name="camera" type="checkbox"  id="camera">   
+            Con cámaras de seguridad
+            </label>
+    </div>
+    <div class="checkbox">
+        <label for="Security Agent">
+        <input name="Security Agent" type="checkbox"  id="Security Agent">   
+        Con agentes de seguridad
+        </label>
+    </div>
+    
+</div> 
   
     <div class="col-md-6">
     <div class="form-group">
