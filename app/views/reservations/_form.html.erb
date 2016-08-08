@@ -11,12 +11,13 @@
   <%= error_span(@reservation[:byhour]) %>
   <%= f.input :byday %>
   <%= error_span(@reservation[:byday]) %>
-  <%= f.association :parkinglot %>
+  <%= f.association :parkinglot, label_method: :name %>
   <%= error_span(@reservation[:parkinglot_id]) %>
-  <%= f.association :user %>
+  <%= f.association :user, label_method: :email %>
   <%= error_span(@reservation[:user_id]) %>
 
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 reservations_path, :class => 'btn btn-default' %>
 <% end %>
+
