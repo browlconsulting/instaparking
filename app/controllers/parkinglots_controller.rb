@@ -1,5 +1,6 @@
 class ParkinglotsController < ApplicationController
   before_action :set_parkinglot, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /parkinglots
   # GET /parkinglots.json
