@@ -1,0 +1,1 @@
+json.array! @userinteractions, partial: 'userinteractions/userinteraction', as: :userinteraction
