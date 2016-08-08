@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
          
   has_one :profile
   has_one :parkinglot
+  has_many :reservations
 
   enum role: [:user, :operator, :admin]
 

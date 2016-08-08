@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :reservations
   resources :parkinglots
   resources :nearbies
   resources :special_features

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808021244) do
+ActiveRecord::Schema.define(version: 20160808035943) do
 
   create_table "nearbies", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -51,6 +51,22 @@ ActiveRecord::Schema.define(version: 20160808021244) do
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
+  create_table "reservations", force: :cascade do |t|
+    t.date     "datestart"
+    t.time     "timestart"
+    t.date     "dateend"
+    t.time     "timeend"
+    t.boolean  "byhour"
+    t.boolean  "byday"
+    t.integer  "parkinglot_id", limit: 4
+    t.integer  "user_id",       limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "reservations", ["parkinglot_id"], name: "index_reservations_on_parkinglot_id", using: :btree
+  add_index "reservations", ["user_id"], name: "index_reservations_on_user_id", using: :btree
+
   create_table "special_features", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
@@ -88,4 +104,6 @@ ActiveRecord::Schema.define(version: 20160808021244) do
   add_foreign_key "parkinglots", "ubigeos"
   add_foreign_key "parkinglots", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "reservations", "parkinglots"
+  add_foreign_key "reservations", "users"
 end

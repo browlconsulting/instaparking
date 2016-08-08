@@ -1,12 +1,10 @@
-<%= simple_form_for(@ubigeo) do |f| %>
-  <%= f.error_notification %>
+<%= simple_form_for @ubigeo, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :district %>
+  <%= error_span(@ubigeo[:district]) %>
+  <%= f.input :department %>
+  <%= error_span(@ubigeo[:department]) %>
 
-  <div class="form-inputs">
-    <%= f.input :district %>
-    <%= f.input :department %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                ubigeos_path, :class => 'btn btn-default' %>
 <% end %>
