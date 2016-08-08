@@ -1,0 +1,28 @@
+<%= simple_form_for @parkinglot, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :name %>
+  <%= error_span(@parkinglot[:name]) %>
+  <%= f.input :address %>
+  <%= error_span(@parkinglot[:address]) %>
+  <%= f.input :addressreference %>
+  <%= error_span(@parkinglot[:addressreference]) %>
+  <%= f.input :pricinghour %>
+  <%= error_span(@parkinglot[:pricinghour]) %>
+  <%= f.input :pricingday %>
+  <%= error_span(@parkinglot[:pricingday]) %>
+  <%= f.input :businesshours %>
+  <%= error_span(@parkinglot[:businesshours]) %>
+  <%= f.input :camera %>
+  <%= error_span(@parkinglot[:camera]) %>
+  <%= f.input :security %>
+  <%= error_span(@parkinglot[:security]) %>
+  <%= f.input :user_id %>
+  <%= error_span(@parkinglot[:user_id]) %>
+  <%= f.input :ubigeo_id %>
+  <%= error_span(@parkinglot[:ubigeo_id]) %>
+  <%= f.input :nearby_id %>
+  <%= error_span(@parkinglot[:nearby_id]) %>
+
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                parkinglots_path, :class => 'btn btn-default' %>
+<% end %>

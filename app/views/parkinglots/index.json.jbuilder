@@ -1,0 +1,1 @@
+json.array! @parkinglots, partial: 'parkinglots/parkinglot', as: :parkinglot

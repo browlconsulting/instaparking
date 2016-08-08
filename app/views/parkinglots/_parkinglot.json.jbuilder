@@ -1,0 +1,2 @@
+json.extract! parkinglot, :id, :name, :address, :addressreference, :pricinghour, :pricingday, :businesshours, :camera, :security, :user_id, :ubigeo_id, :nearby_id, :created_at, :updated_at
+json.url parkinglot_url(parkinglot, format: :json)

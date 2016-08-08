@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  address: MyString
+  addressreference: MyString
+  pricinghour: 9.99
+  pricingday: 9.99
+  businesshours: MyText
+  camera: false
+  security: false
+  user_id: 
+  ubigeo_id: 
+  nearby_id: 
+
+two:
+  name: MyString
+  address: MyString
+  addressreference: MyString
+  pricinghour: 9.99
+  pricingday: 9.99
+  businesshours: MyText
+  camera: false
+  security: false
+  user_id: 
+  ubigeo_id: 
+  nearby_id: 

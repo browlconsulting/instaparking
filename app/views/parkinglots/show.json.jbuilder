@@ -1,0 +1,1 @@
+json.partial! "parkinglots/parkinglot", parkinglot: @parkinglot

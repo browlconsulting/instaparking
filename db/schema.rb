@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729171827) do
+ActiveRecord::Schema.define(version: 20160808021244) do
 
   create_table "nearbies", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -19,6 +19,26 @@ ActiveRecord::Schema.define(version: 20160729171827) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
+
+  create_table "parkinglots", force: :cascade do |t|
+    t.string   "name",             limit: 255
+    t.string   "address",          limit: 255
+    t.string   "addressreference", limit: 255
+    t.decimal  "pricinghour",                    precision: 10
+    t.decimal  "pricingday",                     precision: 10
+    t.text     "businesshours",    limit: 65535
+    t.boolean  "camera"
+    t.boolean  "security"
+    t.integer  "user_id",          limit: 4
+    t.integer  "ubigeo_id",        limit: 4
+    t.integer  "nearby_id",        limit: 4
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
+
+  add_index "parkinglots", ["nearby_id"], name: "index_parkinglots_on_nearby_id", using: :btree
+  add_index "parkinglots", ["ubigeo_id"], name: "index_parkinglots_on_ubigeo_id", using: :btree
+  add_index "parkinglots", ["user_id"], name: "index_parkinglots_on_user_id", using: :btree
 
   create_table "profiles", force: :cascade do |t|
     t.string   "first_name", limit: 255
@@ -64,5 +84,8 @@ ActiveRecord::Schema.define(version: 20160729171827) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "parkinglots", "nearbies"
+  add_foreign_key "parkinglots", "ubigeos"
+  add_foreign_key "parkinglots", "users"
   add_foreign_key "profiles", "users"
 end
