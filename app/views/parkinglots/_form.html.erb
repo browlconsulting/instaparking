@@ -15,12 +15,12 @@
   <%= error_span(@parkinglot[:camera]) %>
   <%= f.input :security %>
   <%= error_span(@parkinglot[:security]) %>
-  <%= f.association :user %>
-  <%= error_span(@parkinglot[:user_id]) %>
-  <%= f.association :ubigeo %>
-  <%= error_span(@parkinglot[:ubigeo_id]) %>
-  <%= f.association :nearby %>
-  <%= error_span(@parkinglot[:nearby_id]) %>
+  <%= f.association :user, label_method: :email %>
+  <%= error_span(@parkinglot[:user]) %>
+  <%= f.association :ubigeo, label_method: :district %>
+  <%= error_span(@parkinglot[:ubigeo]) %>
+  <%= f.association :nearby, label_method: :name %>
+  <%= error_span(@parkinglot[:nearby]) %>
 
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
