@@ -21,11 +21,11 @@
   <dt><strong><%= model_class.human_attribute_name(:security) %>:</strong></dt>
   <dd><%= @parkinglot.security %></dd>
   <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
-  <dd><%= @parkinglot.user_id %></dd>
+  <dd><%= @parkinglot.user.email %></dd>
   <dt><strong><%= model_class.human_attribute_name(:ubigeo_id) %>:</strong></dt>
-  <dd><%= @parkinglot.ubigeo_id %></dd>
+  <dd><%= @parkinglot.ubigeo.district %></dd>
   <dt><strong><%= model_class.human_attribute_name(:nearby_id) %>:</strong></dt>
-  <dd><%= @parkinglot.nearby_id %></dd>
+  <dd><%= @parkinglot.nearby.name %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),

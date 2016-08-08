@@ -33,10 +33,10 @@
         <td><%= parkinglot.businesshours %></td>
         <td><%= parkinglot.camera %></td>
         <td><%= parkinglot.security %></td>
-        <td><%= parkinglot.user_id %></td>
-        <td><%= parkinglot.ubigeo_id %></td>
-        <td><%= parkinglot.nearby_id %></td>
-        <td><%=l parkinglot.created_at %></td>
+        <td><%= parkinglot.user.email %></td>
+        <td><%= parkinglot.ubigeo.district %></td>
+        <td><%= parkinglot.nearby.name %></td>
+        <td><%= parkinglot.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_parkinglot_path(parkinglot), :class => 'btn btn-default btn-xs' %>

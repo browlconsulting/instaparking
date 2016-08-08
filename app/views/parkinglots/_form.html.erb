@@ -15,11 +15,11 @@
   <%= error_span(@parkinglot[:camera]) %>
   <%= f.input :security %>
   <%= error_span(@parkinglot[:security]) %>
-  <%= f.input :user_id %>
+  <%= f.association :user %>
   <%= error_span(@parkinglot[:user_id]) %>
-  <%= f.input :ubigeo_id %>
+  <%= f.association :ubigeo %>
   <%= error_span(@parkinglot[:ubigeo_id]) %>
-  <%= f.input :nearby_id %>
+  <%= f.association :nearby %>
   <%= error_span(@parkinglot[:nearby_id]) %>
 
   <%= f.button :submit, :class => 'btn-primary' %>
