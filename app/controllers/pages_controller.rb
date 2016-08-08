@@ -8,6 +8,7 @@ class PagesController < ApplicationController
   end
 
   def be_promoted
+    @parkinglots = Parkinglot.all
   end
 
   def about_us

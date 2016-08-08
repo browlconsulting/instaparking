@@ -1,11 +1,42 @@
 
 
 <%= content_for :header_title do %>
-    Mis estacionamientos
+   <h2>Mis estacionamientos </h2>
+    
+    <table class="table table-hovered table-bordered">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Address References</th>
+        <th>Pricing Hour</th>
+        <th>Pricing Day</th>
+        <th>Business Hours</th>
+        <th>Camera</th>
+        <th>Security</th>
+    </tr>        
+    </thead>
+    <tbody>
+    <% @parkinglots.each do |p| %>    
+    <tr>
+        <td><%= p.id %></td>
+        <td><%= p.name %></td>
+        <td><%= p.address %></td>
+        <td><%= p.addressreference %></td>
+        <td><%= p.pricinghour %></td>
+        <td><%= p.pricingday %></td>
+        <td><%= p.businesshours %></td>
+        <td><%= p.camera %></td>
+        <td><%= p.security %></td>
+    </tr>
+    <% end %>
+    </tbody>
+    </table>
+    
+    
 <% end %>
 <%= content_for :header_sub_title do %>
     
 <% end %>
 
-
-<p>Find me in app/views/pages/be_promoted.html.erb</p>
