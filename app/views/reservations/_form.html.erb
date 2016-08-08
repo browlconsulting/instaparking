@@ -1,0 +1,22 @@
+<%= simple_form_for @reservation, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :datestart %>
+  <%= error_span(@reservation[:datestart]) %>
+  <%= f.input :timestart %>
+  <%= error_span(@reservation[:timestart]) %>
+  <%= f.input :dateend %>
+  <%= error_span(@reservation[:dateend]) %>
+  <%= f.input :timeend %>
+  <%= error_span(@reservation[:timeend]) %>
+  <%= f.input :byhour %>
+  <%= error_span(@reservation[:byhour]) %>
+  <%= f.input :byday %>
+  <%= error_span(@reservation[:byday]) %>
+  <%= f.association :parkinglot %>
+  <%= error_span(@reservation[:parkinglot_id]) %>
+  <%= f.association :user %>
+  <%= error_span(@reservation[:user_id]) %>
+
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                reservations_path, :class => 'btn btn-default' %>
+<% end %>

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  datestart: 2016-08-08
+  timestart: 2016-08-08 03:59:43
+  dateend: 2016-08-08
+  timeend: 2016-08-08 03:59:43
+  byhour: false
+  byday: false
+  parkinglot_id: 
+  user_id: 
+
+two:
+  datestart: 2016-08-08
+  timestart: 2016-08-08 03:59:43
+  dateend: 2016-08-08
+  timeend: 2016-08-08 03:59:43
+  byhour: false
+  byday: false
+  parkinglot_id: 
+  user_id: 
