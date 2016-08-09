@@ -70,6 +70,6 @@ class ParkinglotsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def parkinglot_params
-      params.require(:parkinglot).permit(:name, :address, :addressreference, :pricinghour, :pricingday, :businesshours, :camera, :security, :user_id, :ubigeo_id, :nearby_id)
+      params.require(:parkinglot).permit(:name, :address, :addressreference, :pricinghour, :pricingday, :businesshours, :camera, :security, :user_id, :ubigeo_id, :nearby_id, :avatar)
     end
 end

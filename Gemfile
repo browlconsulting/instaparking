@@ -59,3 +59,6 @@ gem 'devise-bootstrap-views'
 
 # Admin Section Support
 gem 'rails_admin'
+
+#Attachments Support
+gem 'paperclip', '~> 5.0.0'

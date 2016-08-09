@@ -15,6 +15,7 @@
         <th>Business Hours</th>
         <th>Camera</th>
         <th>Security</th>
+        <th>Imagen</th>
     </tr>        
     </thead>
     <tbody>
@@ -29,7 +30,8 @@
         <td><%= p.businesshours %></td>
         <td><%= p.camera %></td>
         <td><%= p.security %></td>
-    </tr>
+        <td><%= image_tag p.avatar, :size => "100x100" %></td>
+        </tr>
     <% end %>
     </tbody>
     </table>

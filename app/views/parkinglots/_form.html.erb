@@ -21,6 +21,9 @@
   <%= error_span(@parkinglot[:ubigeo]) %>
   <%= f.association :nearby, label_method: :name %>
   <%= error_span(@parkinglot[:nearby]) %>
+  <%= image_tag @parkinglot.avatar.url(:medium), class: 'img-thumbnail' %>
+  <%= f.input :avatar, as: :file %>
+
 
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
