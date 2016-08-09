@@ -7432,3 +7432,2460 @@ Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127
 
 Started GET "/assets/fontawesome-webfont-adbc4f95eb6d7f2738959cf0ecbc374672fce47e856050a8e9791f457623ac2c.woff" for 200.62.171.227 at 2016-08-09 18:53:32 +0000
 Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[36m (62.2ms)[0m  [1mDROP DATABASE IF EXISTS `instaparkingapp_development`[0m
+  [1m[35m (36.6ms)[0m  DROP DATABASE IF EXISTS `instaparkingapp_test`
+  [1m[36m (0.3ms)[0m  [1mCREATE DATABASE `instaparkingapp_development` DEFAULT CHARACTER SET `utf8` COLLATE `utf8_unicode_ci`[0m
+  [1m[35m (0.3ms)[0m  CREATE DATABASE `instaparkingapp_test` DEFAULT CHARACTER SET `utf8` COLLATE `utf8_unicode_ci`
+  [1m[36m (10.7ms)[0m  [1mCREATE TABLE `feedbacks` (`id` int(11) auto_increment PRIMARY KEY, `description` text, `score` int(11), `reservation_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (17.7ms)[0m  CREATE  INDEX `index_feedbacks_on_reservation_id` USING btree ON `feedbacks` (`reservation_id`) 
+  [1m[36m (6.8ms)[0m  [1mCREATE TABLE `nearbies` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `description` text, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (9.9ms)[0m  CREATE TABLE `parkinglots` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `address` varchar(255), `addressreference` varchar(255), `pricinghour` decimal(10), `pricingday` decimal(10), `businesshours` text, `camera` tinyint(1), `security` tinyint(1), `user_id` int(11), `ubigeo_id` int(11), `nearby_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `avatar_file_name` varchar(255), `avatar_content_type` varchar(255), `avatar_file_size` int(11), `avatar_updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (15.5ms)[0m  [1mCREATE  INDEX `index_parkinglots_on_nearby_id` USING btree ON `parkinglots` (`nearby_id`) [0m
+  [1m[35m (14.1ms)[0m  CREATE  INDEX `index_parkinglots_on_ubigeo_id` USING btree ON `parkinglots` (`ubigeo_id`) 
+  [1m[36m (18.5ms)[0m  [1mCREATE  INDEX `index_parkinglots_on_user_id` USING btree ON `parkinglots` (`user_id`) [0m
+  [1m[35m (8.2ms)[0m  CREATE TABLE `profiles` (`id` int(11) auto_increment PRIMARY KEY, `first_name` varchar(255), `last_name` varchar(255), `born_at` datetime, `user_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (17.7ms)[0m  [1mCREATE  INDEX `index_profiles_on_user_id` USING btree ON `profiles` (`user_id`) [0m
+  [1m[35m (7.2ms)[0m  CREATE TABLE `reservations` (`id` int(11) auto_increment PRIMARY KEY, `datestart` date, `timestart` time, `dateend` date, `timeend` time, `byhour` tinyint(1), `byday` tinyint(1), `parkinglot_id` int(11), `user_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (18.4ms)[0m  [1mCREATE  INDEX `index_reservations_on_parkinglot_id` USING btree ON `reservations` (`parkinglot_id`) [0m
+  [1m[35m (14.6ms)[0m  CREATE  INDEX `index_reservations_on_user_id` USING btree ON `reservations` (`user_id`) 
+  [1m[36m (9.4ms)[0m  [1mCREATE TABLE `special_features` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `description` text, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (7.7ms)[0m  CREATE TABLE `ubigeos` (`id` int(11) auto_increment PRIMARY KEY, `district` varchar(255), `department` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (9.3ms)[0m  [1mCREATE TABLE `userinteractions` (`id` int(11) auto_increment PRIMARY KEY, `question` text, `answer` text, `parkinglot_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (16.7ms)[0m  CREATE  INDEX `index_userinteractions_on_parkinglot_id` USING btree ON `userinteractions` (`parkinglot_id`) 
+  [1m[36m (8.6ms)[0m  [1mCREATE TABLE `users` (`id` int(11) auto_increment PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int(11) DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `role` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (22.5ms)[0m  CREATE UNIQUE INDEX `index_users_on_email` USING btree ON `users` (`email`) 
+  [1m[36m (16.7ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_reset_password_token` USING btree ON `users` (`reset_password_token`) [0m
+  [1m[35m (19.8ms)[0m  ALTER TABLE `feedbacks` ADD CONSTRAINT `fk_rails_996f0dd441`
+FOREIGN KEY (`reservation_id`)
+  REFERENCES `reservations` (`id`)
+
+  [1m[36m (30.0ms)[0m  [1mALTER TABLE `parkinglots` ADD CONSTRAINT `fk_rails_47846de8a1`
+FOREIGN KEY (`nearby_id`)
+  REFERENCES `nearbies` (`id`)
+[0m
+  [1m[35m (19.1ms)[0m  ALTER TABLE `parkinglots` ADD CONSTRAINT `fk_rails_a07ef65c72`
+FOREIGN KEY (`ubigeo_id`)
+  REFERENCES `ubigeos` (`id`)
+
+  [1m[36m (16.0ms)[0m  [1mALTER TABLE `parkinglots` ADD CONSTRAINT `fk_rails_88bea2eb41`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+[0m
+  [1m[35m (19.2ms)[0m  ALTER TABLE `profiles` ADD CONSTRAINT `fk_rails_e424190865`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+
+  [1m[36m (15.8ms)[0m  [1mALTER TABLE `reservations` ADD CONSTRAINT `fk_rails_14895a708d`
+FOREIGN KEY (`parkinglot_id`)
+  REFERENCES `parkinglots` (`id`)
+[0m
+  [1m[35m (23.2ms)[0m  ALTER TABLE `reservations` ADD CONSTRAINT `fk_rails_48a92fce51`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+
+  [1m[36m (24.1ms)[0m  [1mALTER TABLE `userinteractions` ADD CONSTRAINT `fk_rails_53fc7a4ca1`
+FOREIGN KEY (`parkinglot_id`)
+  REFERENCES `parkinglots` (`id`)
+[0m
+  [1m[35m (8.9ms)[0m  CREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB
+  [1m[36m (29.7ms)[0m  [1mCREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) [0m
+  [1m[35m (0.4ms)[0m  SELECT version FROM `schema_migrations`
+  [1m[36m (10.0ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160809003206')[0m
+  [1m[35m (5.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160726025823')
+  [1m[36m (3.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160724231421')[0m
+  [1m[35m (3.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160808021244')
+  [1m[36m (3.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160808073832')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160729171827')
+  [1m[36m (3.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160724232207')[0m
+  [1m[35m (3.0ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160726025831')
+  [1m[36m (1.0ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160724230701')[0m
+  [1m[35m (3.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160808071443')
+  [1m[36m (3.1ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160808035943')[0m
+  [1m[35m (8.6ms)[0m  CREATE TABLE `feedbacks` (`id` int(11) auto_increment PRIMARY KEY, `description` text, `score` int(11), `reservation_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (18.4ms)[0m  [1mCREATE  INDEX `index_feedbacks_on_reservation_id` USING btree ON `feedbacks` (`reservation_id`) [0m
+  [1m[35m (12.1ms)[0m  CREATE TABLE `nearbies` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `description` text, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (8.2ms)[0m  [1mCREATE TABLE `parkinglots` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `address` varchar(255), `addressreference` varchar(255), `pricinghour` decimal(10), `pricingday` decimal(10), `businesshours` text, `camera` tinyint(1), `security` tinyint(1), `user_id` int(11), `ubigeo_id` int(11), `nearby_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `avatar_file_name` varchar(255), `avatar_content_type` varchar(255), `avatar_file_size` int(11), `avatar_updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (21.2ms)[0m  CREATE  INDEX `index_parkinglots_on_nearby_id` USING btree ON `parkinglots` (`nearby_id`) 
+  [1m[36m (22.5ms)[0m  [1mCREATE  INDEX `index_parkinglots_on_ubigeo_id` USING btree ON `parkinglots` (`ubigeo_id`) [0m
+  [1m[35m (18.0ms)[0m  CREATE  INDEX `index_parkinglots_on_user_id` USING btree ON `parkinglots` (`user_id`) 
+  [1m[36m (7.7ms)[0m  [1mCREATE TABLE `profiles` (`id` int(11) auto_increment PRIMARY KEY, `first_name` varchar(255), `last_name` varchar(255), `born_at` datetime, `user_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (14.1ms)[0m  CREATE  INDEX `index_profiles_on_user_id` USING btree ON `profiles` (`user_id`) 
+  [1m[36m (10.2ms)[0m  [1mCREATE TABLE `reservations` (`id` int(11) auto_increment PRIMARY KEY, `datestart` date, `timestart` time, `dateend` date, `timeend` time, `byhour` tinyint(1), `byday` tinyint(1), `parkinglot_id` int(11), `user_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (17.8ms)[0m  CREATE  INDEX `index_reservations_on_parkinglot_id` USING btree ON `reservations` (`parkinglot_id`) 
+  [1m[36m (20.4ms)[0m  [1mCREATE  INDEX `index_reservations_on_user_id` USING btree ON `reservations` (`user_id`) [0m
+  [1m[35m (7.8ms)[0m  CREATE TABLE `special_features` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `description` text, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (9.8ms)[0m  [1mCREATE TABLE `ubigeos` (`id` int(11) auto_increment PRIMARY KEY, `district` varchar(255), `department` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (9.4ms)[0m  CREATE TABLE `userinteractions` (`id` int(11) auto_increment PRIMARY KEY, `question` text, `answer` text, `parkinglot_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (13.1ms)[0m  [1mCREATE  INDEX `index_userinteractions_on_parkinglot_id` USING btree ON `userinteractions` (`parkinglot_id`) [0m
+  [1m[35m (9.2ms)[0m  CREATE TABLE `users` (`id` int(11) auto_increment PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int(11) DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `role` int(11)) ENGINE=InnoDB
+  [1m[36m (14.3ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_email` USING btree ON `users` (`email`) [0m
+  [1m[35m (17.8ms)[0m  CREATE UNIQUE INDEX `index_users_on_reset_password_token` USING btree ON `users` (`reset_password_token`) 
+  [1m[36m (15.4ms)[0m  [1mALTER TABLE `feedbacks` ADD CONSTRAINT `fk_rails_996f0dd441`
+FOREIGN KEY (`reservation_id`)
+  REFERENCES `reservations` (`id`)
+[0m
+  [1m[35m (15.5ms)[0m  ALTER TABLE `parkinglots` ADD CONSTRAINT `fk_rails_47846de8a1`
+FOREIGN KEY (`nearby_id`)
+  REFERENCES `nearbies` (`id`)
+
+  [1m[36m (19.9ms)[0m  [1mALTER TABLE `parkinglots` ADD CONSTRAINT `fk_rails_a07ef65c72`
+FOREIGN KEY (`ubigeo_id`)
+  REFERENCES `ubigeos` (`id`)
+[0m
+  [1m[35m (21.6ms)[0m  ALTER TABLE `parkinglots` ADD CONSTRAINT `fk_rails_88bea2eb41`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+
+  [1m[36m (15.6ms)[0m  [1mALTER TABLE `profiles` ADD CONSTRAINT `fk_rails_e424190865`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+[0m
+  [1m[35m (18.1ms)[0m  ALTER TABLE `reservations` ADD CONSTRAINT `fk_rails_14895a708d`
+FOREIGN KEY (`parkinglot_id`)
+  REFERENCES `parkinglots` (`id`)
+
+  [1m[36m (30.5ms)[0m  [1mALTER TABLE `reservations` ADD CONSTRAINT `fk_rails_48a92fce51`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+[0m
+  [1m[35m (21.3ms)[0m  ALTER TABLE `userinteractions` ADD CONSTRAINT `fk_rails_53fc7a4ca1`
+FOREIGN KEY (`parkinglot_id`)
+  REFERENCES `parkinglots` (`id`)
+
+  [1m[36m (9.0ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (18.6ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
+  [1m[36m (0.3ms)[0m  [1mSELECT version FROM `schema_migrations`[0m
+  [1m[35m (3.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160809003206')
+  [1m[36m (3.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160726025823')[0m
+  [1m[35m (1.0ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160724231421')
+  [1m[36m (3.6ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160808021244')[0m
+  [1m[35m (3.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160808073832')
+  [1m[36m (3.1ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160729171827')[0m
+  [1m[35m (1.0ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160724232207')
+  [1m[36m (3.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160726025831')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160724230701')
+  [1m[36m (3.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160808071443')[0m
+  [1m[35m (3.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160808035943')
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Lima', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (5.2ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Ancón', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (4.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Ate', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (3.4ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Breña', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (4.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Carabayllo', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (3.3ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Chaclacayo', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (4.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Chorrillos', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (3.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Cieneguilla', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (3.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Comas', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (4.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('El Agustino', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (3.0ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Independencia', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (3.2ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Jesús María', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (4.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('La Molina', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (4.8ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('La Victoria', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (3.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Lince', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (4.1ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Los Olivos', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (3.0ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Lurin', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (3.0ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Magdalena del Mar', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (4.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Pueblo Libre', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (3.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Miraflores', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (3.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Pachacamac', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (4.4ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Pucusana', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (3.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Puente Piedra', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (3.0ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Punta Hermosa', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (4.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Punta Negra', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (3.2ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Rímac', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (3.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('San Bartolo', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (4.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('San Borja', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (3.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('San Isidro', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (3.2ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('San Juan de Lurigancho', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (4.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('San Juan de Miraflores', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (2.9ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('San Luis', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (3.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('San Martín de Porres', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')[0m
+  [1m[35m (4.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('San Miguel', 'Lima', '2016-08-09 22:59:01', '2016-08-09 22:59:01')
+  [1m[36m (3.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Santa Anita', 'Lima', '2016-08-09 22:59:02', '2016-08-09 22:59:02')[0m
+  [1m[35m (4.6ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Santa María del Mar', 'Lima', '2016-08-09 22:59:02', '2016-08-09 22:59:02')
+  [1m[36m (3.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Santa Rosa', 'Lima', '2016-08-09 22:59:02', '2016-08-09 22:59:02')[0m
+  [1m[35m (4.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Santiago de Surco', 'Lima', '2016-08-09 22:59:02', '2016-08-09 22:59:02')
+  [1m[36m (3.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Surquillo', 'Lima', '2016-08-09 22:59:02', '2016-08-09 22:59:02')[0m
+  [1m[35m (3.2ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Villa El Salvador', 'Lima', '2016-08-09 22:59:02', '2016-08-09 22:59:02')
+  [1m[36m (4.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `ubigeos` (`district`, `department`, `created_at`, `updated_at`) VALUES ('Villa María del Triunfo', 'Lima', '2016-08-09 22:59:02', '2016-08-09 22:59:02')[0m
+  [1m[35m (3.3ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `special_features` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Camera', 'Video cam recorder', '2016-08-09 22:59:02', '2016-08-09 22:59:02')
+  [1m[36m (4.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `special_features` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Security Agent', 'Security personnel', '2016-08-09 22:59:02', '2016-08-09 22:59:02')[0m
+  [1m[35m (3.0ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `nearbies` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Airport', 'Parking lot nearby airport', '2016-08-09 22:59:02', '2016-08-09 22:59:02')
+  [1m[36m (4.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `nearbies` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Stadium', 'Parking lot nearby stadiums', '2016-08-09 22:59:02', '2016-08-09 22:59:02')[0m
+  [1m[35m (3.2ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `nearbies` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Theater', 'Parking lot nearby theaters', '2016-08-09 22:59:02', '2016-08-09 22:59:02')
+  [1m[36m (4.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `nearbies` (`name`, `description`, `created_at`, `updated_at`) VALUES ('Transportation', 'Parking lot nearby transportation for inside the country', '2016-08-09 22:59:02', '2016-08-09 22:59:02')[0m
+  [1m[35m (3.1ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT `schema_migrations`.* FROM `schema_migrations`
+  [1m[36m (0.4ms)[0m  [1mSELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'instaparkingapp_development'
+  AND fk.table_name = 'feedbacks'
+[0m
+  [1m[35m (0.2ms)[0m  SHOW CREATE TABLE `feedbacks`
+  [1m[36m (0.3ms)[0m  [1mSELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'instaparkingapp_development'
+  AND fk.table_name = 'nearbies'
+[0m
+  [1m[35m (0.2ms)[0m  SHOW CREATE TABLE `nearbies`
+  [1m[36m (0.3ms)[0m  [1mSELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'instaparkingapp_development'
+  AND fk.table_name = 'parkinglots'
+[0m
+  [1m[35m (0.3ms)[0m  SHOW CREATE TABLE `parkinglots`
+  [1m[36m (0.5ms)[0m  [1mSELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'instaparkingapp_development'
+  AND fk.table_name = 'profiles'
+[0m
+  [1m[35m (0.2ms)[0m  SHOW CREATE TABLE `profiles`
+  [1m[36m (0.3ms)[0m  [1mSELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'instaparkingapp_development'
+  AND fk.table_name = 'reservations'
+[0m
+  [1m[35m (0.3ms)[0m  SHOW CREATE TABLE `reservations`
+  [1m[36m (0.3ms)[0m  [1mSELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'instaparkingapp_development'
+  AND fk.table_name = 'special_features'
+[0m
+  [1m[35m (0.1ms)[0m  SHOW CREATE TABLE `special_features`
+  [1m[36m (0.3ms)[0m  [1mSELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'instaparkingapp_development'
+  AND fk.table_name = 'ubigeos'
+[0m
+  [1m[35m (0.2ms)[0m  SHOW CREATE TABLE `ubigeos`
+  [1m[36m (0.3ms)[0m  [1mSELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'instaparkingapp_development'
+  AND fk.table_name = 'userinteractions'
+[0m
+  [1m[35m (0.2ms)[0m  SHOW CREATE TABLE `userinteractions`
+  [1m[36m (0.4ms)[0m  [1mSELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'instaparkingapp_development'
+  AND fk.table_name = 'users'
+[0m
+  [1m[35m (0.2ms)[0m  SHOW CREATE TABLE `users`
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:00:55 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (1099.2ms)
+  Rendered layouts/_authentication.html.erb (5.7ms)
+  Rendered layouts/_menu.html.erb (1.1ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.4ms)
+Completed 200 OK in 1441ms (Views: 1423.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:00:56 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (8.2ms)
+  Rendered layouts/_authentication.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 262ms (Views: 261.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:00:57 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (10.1ms)
+  Rendered layouts/_authentication.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.7ms)
+  Rendered layouts/_menu.html.erb (1.9ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 262ms (Views: 261.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/pag1-5f3ec0509318bbebdecb43f3e2d6f8bb19ee64fe0221295d2110387e93fbf226.jpg" for 200.0.118.173 at 2016-08-09 23:00:57 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pag3-045b986169ffbd8cb5272d8598d8881b4ae5b1d4b8f71777aaf9a5e8895a18df.jpg" for 200.0.118.173 at 2016-08-09 23:00:57 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pag4-4c0da615aa9c2c993b5f176c7a37fa1f31558d0f5287d7a233abe3638d8b726b.jpg" for 200.0.118.173 at 2016-08-09 23:00:57 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/fonts/glyphicons-halflings-regular.woff" for 200.0.118.173 at 2016-08-09 23:00:57 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/assets/twitter/fonts/glyphicons-halflings-regular.woff"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (6.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (15.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (198.2ms)
+
+
+Started GET "/assets/pag5-65d02c9379da6e8060c80dc5eb0fcd41841e487749aa079b80df7d0cd88c41e5.jpg" for 200.0.118.173 at 2016-08-09 23:00:58 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/fonts/glyphicons-halflings-regular.ttf" for 200.0.118.173 at 2016-08-09 23:00:58 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/assets/twitter/fonts/glyphicons-halflings-regular.ttf"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (12.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (199.7ms)
+
+
+Started GET "/assets/twitter/fonts/glyphicons-halflings-regular.svg" for 200.0.118.173 at 2016-08-09 23:00:58 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/assets/twitter/fonts/glyphicons-halflings-regular.svg"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (4.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.0ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (171.7ms)
+
+
+Started GET "/users/sign_in" for 200.0.118.173 at 2016-08-09 23:01:23 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Devise::SessionsController#new as HTML
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/devise-bootstrap-views-0.0.8/app/views/devise/shared/_links.html.erb (21.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/devise-bootstrap-views-0.0.8/app/views/devise/sessions/new.html.erb within layouts/application (158.9ms)
+  Rendered layouts/_authentication.html.erb (1.3ms)
+  Rendered layouts/_menu.html.erb (1.2ms)
+  Rendered layouts/_menu.html.erb (1.2ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 442ms (Views: 419.3ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:01:24 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (12.7ms)
+  Rendered layouts/_authentication.html.erb (0.7ms)
+  Rendered layouts/_menu.html.erb (0.8ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 187ms (Views: 186.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for 200.0.118.173 at 2016-08-09 23:01:26 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/devise-bootstrap-views-0.0.8/app/views/devise/shared/_links.html.erb (1.0ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/devise-bootstrap-views-0.0.8/app/views/devise/registrations/new.html.erb within layouts/application (19.0ms)
+  Rendered layouts/_authentication.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 230ms (Views: 228.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:01:26 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (8.9ms)
+  Rendered layouts/_authentication.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 170ms (Views: 169.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:01:54 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (12.3ms)
+  Rendered layouts/_authentication.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 164ms (Views: 163.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 200.0.118.173 at 2016-08-09 23:01:56 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"uTOYeFKFv/5F05xeyqTGy7rWYYOn0kT+tEwb/wy8qqjk5psMnhqDe2Zmg/BSrXbT0gEI9nRpQgqoCymlQodA6Q==", "user"=>{"email"=>"ricardo.blas@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mUser Exists (1.5ms)[0m  [1mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'ricardo.blas@gmail.com' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `users` (`email`, `encrypted_password`, `role`, `created_at`, `updated_at`) VALUES ('ricardo.blas@gmail.com', '$2a$11$a3xkgN6DROlLD6ruIfZpUuiR5SCRut9WJVB04PoU.3Qgc6bevyBVO', 0, '2016-08-09 23:01:56', '2016-08-09 23:01:56')
+  [1m[36m (9.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mUPDATE `users` SET `last_sign_in_at` = '2016-08-09 23:01:56', `current_sign_in_at` = '2016-08-09 23:01:56', `last_sign_in_ip` = '200.0.118.173', `current_sign_in_ip` = '200.0.118.173', `sign_in_count` = 1, `updated_at` = '2016-08-09 23:01:56' WHERE `users`.`id` = 1[0m
+  [1m[35m (5.1ms)[0m  COMMIT
+Redirected to https://instaparking-ricardoblas.c9users.io/
+Completed 302 Found in 356ms (ActiveRecord: 17.6ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:01:56 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (12.4ms)
+  [1m[36mUser Load (0.9ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (0.3ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `profiles` (`user_id`, `created_at`, `updated_at`) VALUES (1, '2016-08-09 23:01:57', '2016-08-09 23:01:57')
+  [1m[36m (6.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mCOMMIT[0m
+  Rendered layouts/_authentication.html.erb (79.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 249ms (Views: 238.3ms | ActiveRecord: 9.8ms)
+
+
+Started GET "/pages/be_promoted" for 200.0.118.173 at 2016-08-09 23:02:01 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#be_promoted as HTML
+  [1m[35mParkinglot Load (0.4ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  Rendered pages/be_promoted.html.erb within layouts/internal (25.6ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (0.4ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (5.2ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 203ms (Views: 166.7ms | ActiveRecord: 22.5ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:02:02 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (9.0ms)
+  Rendered layouts/_authentication.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 161ms (Views: 160.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/parkinglots/new" for 200.0.118.173 at 2016-08-09 23:02:03 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mUser Load (0.4ms)[0m  SELECT `users`.* FROM `users`
+  [1m[36mUbigeo Load (0.4ms)[0m  [1mSELECT `ubigeos`.* FROM `ubigeos`[0m
+  [1m[35mNearby Load (0.2ms)[0m  SELECT `nearbies`.* FROM `nearbies`
+  Rendered parkinglots/_form.html.erb (90.4ms)
+  Rendered parkinglots/new.html.erb within layouts/application (94.9ms)
+  [1m[36mProfile Load (0.3ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.3ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 277ms (Views: 260.1ms | ActiveRecord: 4.5ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:02:03 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (13.2ms)
+  Rendered layouts/_authentication.html.erb (0.7ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 178ms (Views: 177.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/images/images/medium/missing.png" for 200.0.118.173 at 2016-08-09 23:02:06 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/images/images/medium/missing.png"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (3.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (152.4ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:04:02 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (8.4ms)
+  Rendered layouts/_authentication.html.erb (0.7ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 184ms (Views: 183.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/parkinglots" for 200.0.118.173 at 2016-08-09 23:04:04 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"4ulNaFY5MhpizoPRRCfQPvUW02gmEi8G8tIXWIn15YO/PE4cmqYOn0F7nH/cLmAmncG6HfWpKfLulSUCx84Pwg==", "parkinglot"=>{"name"=>"Los Portales - Pardo y Aliaga", "address"=>"Av. Felipe Pardo y Aliaga 699", "addressreference"=>"Alt. Cdr. 12 Av. Camino Real", "pricinghour"=>"5", "pricingday"=>"30", "businesshours"=>"LV: 06:00 - 22:00\r\nS : 08:00 - 20:00", "camera"=>"1", "security"=>"1", "user_id"=>"1", "ubigeo_id"=>"29", "nearby_id"=>"3"}, "commit"=>"Create Parkinglot"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO `parkinglots` (`name`, `address`, `addressreference`, `pricinghour`, `pricingday`, `businesshours`, `camera`, `security`, `user_id`, `ubigeo_id`, `nearby_id`, `created_at`, `updated_at`) VALUES ('Los Portales - Pardo y Aliaga', 'Av. Felipe Pardo y Aliaga 699', 'Alt. Cdr. 12 Av. Camino Real', 5, 30, 'LV: 06:00 - 22:00\r\nS : 08:00 - 20:00', 1, 1, 1, 29, 3, '2016-08-09 23:04:04', '2016-08-09 23:04:04')
+  [1m[36m (6.4ms)[0m  [1mCOMMIT[0m
+Redirected to https://instaparking-ricardoblas.c9users.io/parkinglots/1
+Completed 302 Found in 15ms (ActiveRecord: 7.3ms)
+
+
+Started GET "/parkinglots/1" for 200.0.118.173 at 2016-08-09 23:04:04 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mParkinglot Load (0.4ms)[0m  SELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 1 LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mUser Load (0.4ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1
+  [1m[36mUbigeo Load (0.3ms)[0m  [1mSELECT  `ubigeos`.* FROM `ubigeos` WHERE `ubigeos`.`id` = 29 LIMIT 1[0m
+  [1m[35mNearby Load (0.2ms)[0m  SELECT  `nearbies`.* FROM `nearbies` WHERE `nearbies`.`id` = 3 LIMIT 1
+  Rendered parkinglots/show.html.erb within layouts/application (14.7ms)
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (1.9ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 199ms (Views: 194.3ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:04:04 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (7.8ms)
+  Rendered layouts/_authentication.html.erb (2.3ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 165ms (Views: 164.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:04:05 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (16.8ms)
+  Rendered layouts/_authentication.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 172ms (Views: 171.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/parkinglots" for 200.0.118.173 at 2016-08-09 23:08:02 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mParkinglot Load (0.5ms)[0m  [1mSELECT `parkinglots`.* FROM `parkinglots`[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1
+  [1m[36mUbigeo Load (0.2ms)[0m  [1mSELECT  `ubigeos`.* FROM `ubigeos` WHERE `ubigeos`.`id` = 29 LIMIT 1[0m
+  [1m[35mNearby Load (0.3ms)[0m  SELECT  `nearbies`.* FROM `nearbies` WHERE `nearbies`.`id` = 3 LIMIT 1
+  Rendered parkinglots/index.html.erb within layouts/application (70.0ms)
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.1ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 247ms (Views: 241.9ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/parkinglots/new" for 200.0.118.173 at 2016-08-09 23:15:35 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+  [1m[35mUbigeo Load (0.2ms)[0m  SELECT `ubigeos`.* FROM `ubigeos`
+  [1m[36mNearby Load (0.2ms)[0m  [1mSELECT `nearbies`.* FROM `nearbies`[0m
+  Rendered parkinglots/_form.html.erb (63.7ms)
+  Rendered parkinglots/new.html.erb within layouts/application (70.5ms)
+  [1m[35mProfile Load (0.4ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (3.7ms)
+  Rendered layouts/_menu.html.erb (1.8ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 271ms (Views: 266.3ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/images/images/medium/missing.png" for 200.0.118.173 at 2016-08-09 23:15:36 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/images/images/medium/missing.png"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.4ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (4.1ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.2ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (169.2ms)
+
+
+Started GET "/parkinglots" for 200.0.118.173 at 2016-08-09 23:15:38 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mParkinglot Load (2.2ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+  [1m[35mUbigeo Load (0.1ms)[0m  SELECT  `ubigeos`.* FROM `ubigeos` WHERE `ubigeos`.`id` = 29 LIMIT 1
+  [1m[36mNearby Load (0.1ms)[0m  [1mSELECT  `nearbies`.* FROM `nearbies` WHERE `nearbies`.`id` = 3 LIMIT 1[0m
+  Rendered parkinglots/index.html.erb within layouts/application (11.2ms)
+  [1m[35mProfile Load (0.4ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (5.0ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (2.7ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 246ms (Views: 240.2ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/images/images/medium/missing.png" for 200.0.118.173 at 2016-08-09 23:15:39 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/images/images/medium/missing.png"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (10.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.3ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (213.3ms)
+
+
+Started GET "/parkinglots/1/edit" for 200.0.118.173 at 2016-08-09 23:15:40 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mParkinglot Load (35.0ms)[0m  [1mSELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 1 LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+  [1m[35mUbigeo Load (0.4ms)[0m  SELECT `ubigeos`.* FROM `ubigeos`
+  [1m[36mNearby Load (0.4ms)[0m  [1mSELECT `nearbies`.* FROM `nearbies`[0m
+  Rendered parkinglots/_form.html.erb (129.2ms)
+  Rendered parkinglots/edit.html.erb within layouts/application (136.6ms)
+  [1m[35mProfile Load (0.6ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (3.6ms)
+  Rendered layouts/_menu.html.erb (0.8ms)
+  Rendered layouts/_menu.html.erb (1.7ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 524ms (Views: 480.8ms | ActiveRecord: 37.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:15:41 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (11.9ms)
+  Rendered layouts/_authentication.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.7ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 286ms (Views: 285.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/images/images/medium/missing.png" for 200.0.118.173 at 2016-08-09 23:15:41 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/images/images/medium/missing.png"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (7.2ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.3ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (207.3ms)
+
+
+Started PATCH "/parkinglots/1" for 200.0.118.173 at 2016-08-09 23:16:01 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"5HUttqCmD+yS4y04WYgxWhhcdDdiRcI9+9G0dbMp3gC5oC7CbDkzabFWMpbBgYFCcIsdQrH+xMnnloYv/RI0QQ==", "parkinglot"=>{"name"=>"Los Portales - Pardo y Aliaga", "address"=>"Av. Felipe Pardo y Aliaga 699", "addressreference"=>"Alt. Cdr. 12 Av. Camino Real", "pricinghour"=>"5", "pricingday"=>"30", "businesshours"=>"LV: 06:00 - 22:00\r\nS : 08:00 - 20:00", "camera"=>"1", "security"=>"1", "user_id"=>"1", "ubigeo_id"=>"29", "nearby_id"=>"3", "avatar"=>#<ActionDispatch::Http::UploadedFile:0x007f28c0d8c418 @tempfile=#<Tempfile:/tmp/RackMultipart20160809-4697-1e06bg7.jpg>, @original_filename="LosPortalesOrquideas.jpg", @content_type="image/jpeg", @headers="Content-Disposition: form-data; name=\"parkinglot[avatar]\"; filename=\"LosPortalesOrquideas.jpg\"\r\nContent-Type: image/jpeg\r\n">}, "commit"=>"Update Parkinglot", "id"=>"1"}
+  [1m[36mParkinglot Load (0.2ms)[0m  [1mSELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 1 LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+Command :: file -b --mime '/tmp/d8c9f6f223a878d7271dd2d4a9d735da20160809-4697-36ei8w.jpg'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/d8c9f6f223a878d7271dd2d4a9d735da20160809-4697-1tczoa6.jpg[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/d8c9f6f223a878d7271dd2d4a9d735da20160809-4697-1tczoa6.jpg[0]'
+Command :: convert '/tmp/d8c9f6f223a878d7271dd2d4a9d735da20160809-4697-1tczoa6.jpg[0]' -auto-orient -resize "300x300>" '/tmp/fe02c8d0d41d9546862b51090bb600d520160809-4697-110l0sg'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/d8c9f6f223a878d7271dd2d4a9d735da20160809-4697-1tczoa6.jpg[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/d8c9f6f223a878d7271dd2d4a9d735da20160809-4697-1tczoa6.jpg[0]'
+Command :: convert '/tmp/d8c9f6f223a878d7271dd2d4a9d735da20160809-4697-1tczoa6.jpg[0]' -auto-orient -resize "100x100>" '/tmp/fe02c8d0d41d9546862b51090bb600d520160809-4697-39i1y0'
+Command :: file -b --mime '/tmp/d8c9f6f223a878d7271dd2d4a9d735da20160809-4697-8lcq7d.jpg'
+  [1m[35mSQL (0.5ms)[0m  UPDATE `parkinglots` SET `avatar_file_name` = 'LosPortalesOrquideas.jpg', `avatar_content_type` = 'image/jpeg', `avatar_file_size` = 40178, `avatar_updated_at` = '2016-08-09 23:16:01', `updated_at` = '2016-08-09 23:16:01' WHERE `parkinglots`.`id` = 1
+  [1m[36m (7.2ms)[0m  [1mCOMMIT[0m
+Redirected to https://instaparking-ricardoblas.c9users.io/parkinglots/1
+Completed 302 Found in 329ms (ActiveRecord: 8.3ms)
+
+
+Started GET "/parkinglots/1" for 200.0.118.173 at 2016-08-09 23:16:02 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mParkinglot Load (0.6ms)[0m  SELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 1 LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1
+  [1m[36mUbigeo Load (0.2ms)[0m  [1mSELECT  `ubigeos`.* FROM `ubigeos` WHERE `ubigeos`.`id` = 29 LIMIT 1[0m
+  [1m[35mNearby Load (0.2ms)[0m  SELECT  `nearbies`.* FROM `nearbies` WHERE `nearbies`.`id` = 3 LIMIT 1
+  Rendered parkinglots/show.html.erb within layouts/application (49.5ms)
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (15.4ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 212ms (Views: 208.0ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/pages/be_promoted" for 200.0.118.173 at 2016-08-09 23:16:07 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#be_promoted as HTML
+  [1m[35mParkinglot Load (0.6ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  Rendered pages/be_promoted.html.erb within layouts/internal (8.9ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (0.1ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (3.1ms)
+  Rendered layouts/_menu.html.erb (1.1ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 229ms (Views: 227.1ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:16:20 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (12.1ms)
+  Rendered layouts/_authentication.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 192ms (Views: 191.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/pages/search" for 200.0.118.173 at 2016-08-09 23:16:20 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#search as HTML
+  [1m[36mUbigeo Load (0.3ms)[0m  [1mSELECT `ubigeos`.* FROM `ubigeos`[0m
+  [1m[35mNearby Load (0.2ms)[0m  SELECT `nearbies`.* FROM `nearbies`
+  Rendered pages/search.html.erb within layouts/internal (13.2ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (0.2ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (5.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 179ms (Views: 177.4ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/reservations/new" for 200.0.118.173 at 2016-08-09 23:16:25 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mParkinglot Load (0.2ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+  Rendered reservations/_form.html.erb (59.0ms)
+  Rendered reservations/new.html.erb within layouts/application (66.4ms)
+  [1m[35mProfile Load (0.2ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (1.9ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 270ms (Views: 244.0ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:16:25 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (15.8ms)
+  Rendered layouts/_authentication.html.erb (0.7ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 195ms (Views: 194.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:17:21 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (12.2ms)
+  Rendered layouts/_authentication.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 200ms (Views: 199.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/reservations" for 200.0.118.173 at 2016-08-09 23:17:22 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"zD9zdYlla7g08KRRcY471T8wV0nLmOFq1n5Ae5ZzYQOR6nABRfpXPRdFu//ph4vNV+c+PBgj557KOXIh2EiLQg==", "reservation"=>{"datestart(1i)"=>"2016", "datestart(2i)"=>"8", "datestart(3i)"=>"9", "timestart(1i)"=>"2016", "timestart(2i)"=>"8", "timestart(3i)"=>"9", "timestart(4i)"=>"20", "timestart(5i)"=>"00", "dateend(1i)"=>"2016", "dateend(2i)"=>"8", "dateend(3i)"=>"9", "timeend(1i)"=>"2016", "timeend(2i)"=>"8", "timeend(3i)"=>"9", "timeend(4i)"=>"22", "timeend(5i)"=>"00", "byhour"=>"1", "byday"=>"0", "parkinglot_id"=>"1", "user_id"=>"1"}, "commit"=>"Create Reservation"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO `reservations` (`byhour`, `byday`, `parkinglot_id`, `user_id`, `datestart`, `timestart`, `dateend`, `timeend`, `created_at`, `updated_at`) VALUES (1, 0, 1, 1, '2016-08-09', '2016-08-09 20:00:00.000000', '2016-08-09', '2016-08-09 22:00:00.000000', '2016-08-09 23:17:22', '2016-08-09 23:17:22')[0m
+  [1m[35m (6.0ms)[0m  COMMIT
+Redirected to https://instaparking-ricardoblas.c9users.io/reservations/1
+Completed 302 Found in 95ms (ActiveRecord: 6.9ms)
+
+
+Started GET "/reservations/1" for 200.0.118.173 at 2016-08-09 23:17:22 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mReservation Load (0.4ms)[0m  [1mSELECT  `reservations`.* FROM `reservations` WHERE `reservations`.`id` = 1 LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mParkinglot Load (0.3ms)[0m  [1mSELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 1 LIMIT 1[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1
+  Rendered reservations/show.html.erb within layouts/application (14.4ms)
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.2ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 192ms (Views: 187.3ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:17:22 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (17.8ms)
+  Rendered layouts/_authentication.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 168ms (Views: 167.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:17:23 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (11.5ms)
+  Rendered layouts/_authentication.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 187ms (Views: 186.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:17:23 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (8.0ms)
+  Rendered layouts/_authentication.html.erb (1.3ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 170ms (Views: 170.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/pages/search" for 200.0.118.173 at 2016-08-09 23:17:45 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#search as HTML
+  [1m[35mUbigeo Load (0.2ms)[0m  SELECT `ubigeos`.* FROM `ubigeos`
+  [1m[36mNearby Load (0.2ms)[0m  [1mSELECT `nearbies`.* FROM `nearbies`[0m
+  Rendered pages/search.html.erb within layouts/internal (5.9ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (3.4ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 186ms (Views: 184.7ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/reservations" for 200.0.118.173 at 2016-08-09 23:18:08 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mReservation Load (0.4ms)[0m  [1mSELECT `reservations`.* FROM `reservations`[0m
+  [1m[35mParkinglot Load (0.1ms)[0m  SELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 1 LIMIT 1
+  [1m[36mUser Load (93.3ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+  Rendered reservations/index.html.erb within layouts/application (101.6ms)
+  [1m[35mProfile Load (0.3ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (2.2ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 263ms (Views: 166.2ms | ActiveRecord: 94.4ms)
+
+
+Started GET "/reservations/new" for 200.0.118.173 at 2016-08-09 23:18:21 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mParkinglot Load (0.2ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+  Rendered reservations/_form.html.erb (35.7ms)
+  Rendered reservations/new.html.erb within layouts/application (43.5ms)
+  [1m[35mProfile Load (0.2ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (1.9ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 211ms (Views: 207.9ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/reservations" for 200.0.118.173 at 2016-08-09 23:18:59 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mReservation Load (0.2ms)[0m  SELECT `reservations`.* FROM `reservations`
+  [1m[36mParkinglot Load (0.2ms)[0m  [1mSELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 1 LIMIT 1[0m
+  [1m[35mUser Load (114.7ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1
+  Rendered reservations/index.html.erb within layouts/application (120.9ms)
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.1ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 282ms (Views: 164.2ms | ActiveRecord: 115.5ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:20:42 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (14.3ms)
+  Rendered layouts/_authentication.html.erb (0.8ms)
+  Rendered layouts/_menu.html.erb (0.8ms)
+  Rendered layouts/_menu.html.erb (0.7ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 208ms (Views: 207.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/bootstrap_and_overrides.self-d7ea915e87a1932505041610b95fce4d30e49eec0e45e8949850a9fd2bd564e0.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:42 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/feedbacks.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:42 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/nearbies.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:42 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pages.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:42 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/profiles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:42 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/parkinglots.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:42 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/scaffolds.self-099cd90777efec4f3359cfc90b7a640e333e7dffe1d4a8fbb1b4f0c45c442db2.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/reservations.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/special_features.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/ubigeos.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/userinteractions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/modal.self-ab1767545e27c0dbd36971e656ae4927171f673e3d932cdec2cbef39e991952b.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/transition.self-db278e3a8fa6249c16796b113ebd29e11ef4e2cd021618ed84895d524a4511e0.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/alert.self-ebce91ec66c71bcee451ea7da9128fd1bf8faa02c6d22ea04c598423431e4c08.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/dropdown.self-8bb9309b6c24a4ba6b94026a049d25b13bdc0553b6fe83255c14a715ba624cc4.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/scrollspy.self-bd0c6724cdc75302fe98dfeff923112b76c1673cf4a0752a7050b7feea15594c.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/tab.self-7e3ee4a243bb416b5f0111a0be08f8547c5d72ba71fe4afe4a4a007f5cb4e10e.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/tooltip.self-d7f9330825307d053f68da11bb9ddc9b070df72deef3d115f2f3d55f66b17457.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/popover.self-cd672ecad3b549e1dbd89bfd044e5812d6fdade56f42d48e3acee0c3f4614526.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/button.self-ceb562de883e04359bb2c06f07bdf6ecf065cc8a5027e2e58857c5e91b0b68e3.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/collapse.self-a87553101c955a01e2e8c81fad69a16582ddbf58fe95d5eb335dde5567af7647.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/carousel.self-5d09995e01b647168888180d40e271f9a6759d68ae7ac029d7026af58813d376.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/affix.self-14e04bbe71282aa039322ab93e3a3a886ddede5f59a2f365f7c861f697bbeb21.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap.self-fbfa5ad7d9aa0afe439ec4ff3883acc4cb92b62cb67c40d674320c9aa1d4642d.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/turbolinks.self-c5acd7a204f5f25ce7a1d8a0e4d92e28d34c9e2df2c7371cd7af88e147e4ad82.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap.self-fdc98dee79ee88255e10cac6caa91338165cb76cf0d263744d8d90011fc2ef8f.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/feedbacks.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/nearbies.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pages.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/parkinglots.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:43 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/profiles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/reservations.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/special_features.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/ubigeos.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/userinteractions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/application.self-f8806224e027f3e3f0138ea9ce99319e298dfdb323304d1f1be6eae8e8c74724.js?body=1" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pag1-5f3ec0509318bbebdecb43f3e2d6f8bb19ee64fe0221295d2110387e93fbf226.jpg" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pag3-045b986169ffbd8cb5272d8598d8881b4ae5b1d4b8f71777aaf9a5e8895a18df.jpg" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pag5-65d02c9379da6e8060c80dc5eb0fcd41841e487749aa079b80df7d0cd88c41e5.jpg" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/01map-08a096d4ad3e67d49e99ea52f873fdf23089fe4c3312504b59190ccf7e9abb39.png" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/03search-ba39c30fd330929a70fb88db35a37057417d0e7ee5f41517fcc2fd3cab5c4859.png" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pag4-4c0da615aa9c2c993b5f176c7a37fa1f31558d0f5287d7a233abe3638d8b726b.jpg" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/fonts/glyphicons-halflings-regular.woff" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/assets/twitter/fonts/glyphicons-halflings-regular.woff"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (12.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (174.6ms)
+
+
+Started GET "/assets/fontawesome-webfont-adbc4f95eb6d7f2738959cf0ecbc374672fce47e856050a8e9791f457623ac2c.woff" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/02park-1e6423a5dd376ba7466f061d466439be514549e65be920c15a3d325ed1f1380b.png" for 200.0.118.173 at 2016-08-09 23:20:44 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/fonts/glyphicons-halflings-regular.ttf" for 200.0.118.173 at 2016-08-09 23:20:45 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/assets/twitter/fonts/glyphicons-halflings-regular.ttf"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (5.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (168.2ms)
+
+
+Started GET "/users/sign_in" for 200.0.118.173 at 2016-08-09 23:20:46 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Devise::SessionsController#new as HTML
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/devise-bootstrap-views-0.0.8/app/views/devise/shared/_links.html.erb (0.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/devise-bootstrap-views-0.0.8/app/views/devise/sessions/new.html.erb within layouts/application (11.5ms)
+  Rendered layouts/_authentication.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (1.1ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 248ms (Views: 246.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/pages/be_promoted" for 200.0.118.173 at 2016-08-09 23:20:46 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#be_promoted as HTML
+  [1m[35mParkinglot Load (0.2ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  Rendered pages/be_promoted.html.erb within layouts/internal (2.5ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (0.1ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (3.7ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (17.6ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 192ms (Views: 190.1ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/users/sign_up" for 200.0.118.173 at 2016-08-09 23:20:48 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/devise-bootstrap-views-0.0.8/app/views/devise/shared/_links.html.erb (0.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/devise-bootstrap-views-0.0.8/app/views/devise/registrations/new.html.erb within layouts/application (18.7ms)
+  Rendered layouts/_authentication.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 273ms (Views: 271.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/parkinglots/new" for 200.0.118.173 at 2016-08-09 23:20:49 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT `users`.* FROM `users`
+  [1m[36mUbigeo Load (0.2ms)[0m  [1mSELECT `ubigeos`.* FROM `ubigeos`[0m
+  [1m[35mNearby Load (0.2ms)[0m  SELECT `nearbies`.* FROM `nearbies`
+  Rendered parkinglots/_form.html.erb (69.5ms)
+  Rendered parkinglots/new.html.erb within layouts/application (74.3ms)
+  [1m[36mProfile Load (0.3ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.6ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 260ms (Views: 255.3ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/images/images/medium/missing.png" for 200.0.118.173 at 2016-08-09 23:20:49 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/images/images/medium/missing.png"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (5.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.0ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.2ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (173.7ms)
+
+
+Started POST "/users" for 200.0.118.173 at 2016-08-09 23:20:59 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"s7ZHlmK4q6n7OZ1XJWNWqb/m5FbtVETXS/h8TJ9j+62TEYuVf5l4gqazGep30RdV73QXNInlk1yha8Sy9fJHUw==", "user"=>{"email"=>"jose.ramirezch84@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mUser Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'jose.ramirezch84@gmail.com' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `users` (`email`, `encrypted_password`, `role`, `created_at`, `updated_at`) VALUES ('jose.ramirezch84@gmail.com', '$2a$11$cMyjxzUnl9RC/GyStGHwPOahlgkR8TX3F4ZpRLsRiDOnf6en0xcYW', 0, '2016-08-09 23:20:59', '2016-08-09 23:20:59')
+  [1m[36m (4.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mUPDATE `users` SET `last_sign_in_at` = '2016-08-09 23:20:59', `current_sign_in_at` = '2016-08-09 23:20:59', `last_sign_in_ip` = '200.0.118.173', `current_sign_in_ip` = '200.0.118.173', `sign_in_count` = 1, `updated_at` = '2016-08-09 23:20:59' WHERE `users`.`id` = 2[0m
+  [1m[35m (3.5ms)[0m  COMMIT
+Redirected to https://instaparking-ricardoblas.c9users.io/
+Completed 302 Found in 201ms (ActiveRecord: 9.5ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:20:59 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (10.3ms)
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 2  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (0.3ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 2 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `profiles` (`user_id`, `created_at`, `updated_at`) VALUES (2, '2016-08-09 23:20:59', '2016-08-09 23:20:59')
+  [1m[36m (5.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mCOMMIT[0m
+  Rendered layouts/_authentication.html.erb (31.2ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 214ms (Views: 205.9ms | ActiveRecord: 7.7ms)
+
+
+Started GET "/assets/twitter/fonts/glyphicons-halflings-regular.woff" for 200.0.118.173 at 2016-08-09 23:21:00 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/assets/twitter/fonts/glyphicons-halflings-regular.woff"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (5.3ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (4.2ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (180.5ms)
+
+
+Started GET "/assets/twitter/fonts/glyphicons-halflings-regular.ttf" for 200.0.118.173 at 2016-08-09 23:21:00 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/assets/twitter/fonts/glyphicons-halflings-regular.ttf"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.4ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (3.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (148.0ms)
+
+
+Started GET "/pages/be_promoted" for 200.0.118.173 at 2016-08-09 23:21:04 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#be_promoted as HTML
+  [1m[35mParkinglot Load (0.2ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  Rendered pages/be_promoted.html.erb within layouts/internal (2.4ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 2  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (0.6ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 2 LIMIT 1
+  Rendered layouts/_authentication.html.erb (3.9ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 165ms (Views: 163.1ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 190.113.208.197 at 2016-08-09 23:21:46 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (7.5ms)
+  Rendered layouts/_authentication.html.erb (0.8ms)
+  Rendered layouts/_menu.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 187ms (Views: 186.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/bootstrap_and_overrides.self-d7ea915e87a1932505041610b95fce4d30e49eec0e45e8949850a9fd2bd564e0.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/nearbies.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pages.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/parkinglots.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/reservations.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/profiles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/feedbacks.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/scaffolds.self-099cd90777efec4f3359cfc90b7a640e333e7dffe1d4a8fbb1b4f0c45c442db2.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/special_features.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/ubigeos.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/userinteractions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/turbolinks.self-c5acd7a204f5f25ce7a1d8a0e4d92e28d34c9e2df2c7371cd7af88e147e4ad82.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/alert.self-ebce91ec66c71bcee451ea7da9128fd1bf8faa02c6d22ea04c598423431e4c08.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/modal.self-ab1767545e27c0dbd36971e656ae4927171f673e3d932cdec2cbef39e991952b.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/transition.self-db278e3a8fa6249c16796b113ebd29e11ef4e2cd021618ed84895d524a4511e0.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap.self-fdc98dee79ee88255e10cac6caa91338165cb76cf0d263744d8d90011fc2ef8f.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/scrollspy.self-bd0c6724cdc75302fe98dfeff923112b76c1673cf4a0752a7050b7feea15594c.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/tooltip.self-d7f9330825307d053f68da11bb9ddc9b070df72deef3d115f2f3d55f66b17457.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/popover.self-cd672ecad3b549e1dbd89bfd044e5812d6fdade56f42d48e3acee0c3f4614526.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/tab.self-7e3ee4a243bb416b5f0111a0be08f8547c5d72ba71fe4afe4a4a007f5cb4e10e.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/collapse.self-a87553101c955a01e2e8c81fad69a16582ddbf58fe95d5eb335dde5567af7647.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/feedbacks.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/affix.self-14e04bbe71282aa039322ab93e3a3a886ddede5f59a2f365f7c861f697bbeb21.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap.self-fbfa5ad7d9aa0afe439ec4ff3883acc4cb92b62cb67c40d674320c9aa1d4642d.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/carousel.self-5d09995e01b647168888180d40e271f9a6759d68ae7ac029d7026af58813d376.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/parkinglots.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/nearbies.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/reservations.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:47 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/profiles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/special_features.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/application.self-f8806224e027f3e3f0138ea9ce99319e298dfdb323304d1f1be6eae8e8c74724.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/ubigeos.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/dropdown.self-8bb9309b6c24a4ba6b94026a049d25b13bdc0553b6fe83255c14a715ba624cc4.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/button.self-ceb562de883e04359bb2c06f07bdf6ecf065cc8a5027e2e58857c5e91b0b68e3.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pages.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/userinteractions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pag3-045b986169ffbd8cb5272d8598d8881b4ae5b1d4b8f71777aaf9a5e8895a18df.jpg" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pag4-4c0da615aa9c2c993b5f176c7a37fa1f31558d0f5287d7a233abe3638d8b726b.jpg" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pag1-5f3ec0509318bbebdecb43f3e2d6f8bb19ee64fe0221295d2110387e93fbf226.jpg" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/01map-08a096d4ad3e67d49e99ea52f873fdf23089fe4c3312504b59190ccf7e9abb39.png" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/03search-ba39c30fd330929a70fb88db35a37057417d0e7ee5f41517fcc2fd3cab5c4859.png" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pag5-65d02c9379da6e8060c80dc5eb0fcd41841e487749aa079b80df7d0cd88c41e5.jpg" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/02park-1e6423a5dd376ba7466f061d466439be514549e65be920c15a3d325ed1f1380b.png" for 190.113.208.197 at 2016-08-09 23:21:48 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/fonts/glyphicons-halflings-regular.woff" for 190.113.208.197 at 2016-08-09 23:21:49 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/assets/twitter/fonts/glyphicons-halflings-regular.woff"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (12.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (179.9ms)
+
+
+Started GET "/assets/fontawesome-webfont-adbc4f95eb6d7f2738959cf0ecbc374672fce47e856050a8e9791f457623ac2c.woff" for 190.113.208.197 at 2016-08-09 23:21:49 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/fonts/glyphicons-halflings-regular.ttf" for 190.113.208.197 at 2016-08-09 23:21:49 +0000
+Cannot render console from 190.113.208.197! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/assets/twitter/fonts/glyphicons-halflings-regular.ttf"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (3.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (6.0ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (162.5ms)
+
+
+Started GET "/parkinglots/new" for 200.0.118.173 at 2016-08-09 23:22:38 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 2  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mUser Load (0.5ms)[0m  SELECT `users`.* FROM `users`
+  [1m[36mUbigeo Load (0.2ms)[0m  [1mSELECT `ubigeos`.* FROM `ubigeos`[0m
+  [1m[35mNearby Load (0.2ms)[0m  SELECT `nearbies`.* FROM `nearbies`
+  Rendered parkinglots/_form.html.erb (49.7ms)
+  Rendered parkinglots/new.html.erb within layouts/application (160.1ms)
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 2 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.0ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 324ms (Views: 319.3ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/images/images/medium/missing.png" for 200.0.118.173 at 2016-08-09 23:22:38 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/images/images/medium/missing.png"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (3.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (173.2ms)
+
+
+Started POST "/parkinglots" for 200.0.118.173 at 2016-08-09 23:23:34 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"bx3pbD0LBO3MxEFe+X0mQsHk0ydiguumQlCiRUFPWswyyOoY8ZQ4aO9xXvBhdJZaqTO6UrE57VJeF5AfD3SwjQ==", "parkinglot"=>{"name"=>"Los Portales - Aeropuerto", "address"=>"Av. Elmer Fauceet 4012", "addressreference"=>"Alt. Cdr. 30. Bocanegra", "pricinghour"=>"6", "pricingday"=>"50", "businesshours"=>"LD : 24 horas", "camera"=>"0", "security"=>"1", "user_id"=>"1", "ubigeo_id"=>"33", "nearby_id"=>"1", "avatar"=>#<ActionDispatch::Http::UploadedFile:0x007f28c1172c30 @tempfile=#<Tempfile:/tmp/RackMultipart20160809-4697-1uv5xol.jpg>, @original_filename="Aeropuerto.jpg", @content_type="image/jpeg", @headers="Content-Disposition: form-data; name=\"parkinglot[avatar]\"; filename=\"Aeropuerto.jpg\"\r\nContent-Type: image/jpeg\r\n">}, "commit"=>"Create Parkinglot"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+Command :: file -b --mime '/tmp/718fcf88a8a1cc158ada7d267883d07c20160809-4697-19610ti.jpg'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/718fcf88a8a1cc158ada7d267883d07c20160809-4697-1dyqnv9.jpg[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/718fcf88a8a1cc158ada7d267883d07c20160809-4697-1dyqnv9.jpg[0]'
+Command :: convert '/tmp/718fcf88a8a1cc158ada7d267883d07c20160809-4697-1dyqnv9.jpg[0]' -auto-orient -resize "300x300>" '/tmp/c2c8f5e6159fe35e61a2bc77471032fa20160809-4697-1lnfi8s'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/718fcf88a8a1cc158ada7d267883d07c20160809-4697-1dyqnv9.jpg[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/718fcf88a8a1cc158ada7d267883d07c20160809-4697-1dyqnv9.jpg[0]'
+Command :: convert '/tmp/718fcf88a8a1cc158ada7d267883d07c20160809-4697-1dyqnv9.jpg[0]' -auto-orient -resize "100x100>" '/tmp/c2c8f5e6159fe35e61a2bc77471032fa20160809-4697-ffvqoh'
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+Command :: file -b --mime '/tmp/718fcf88a8a1cc158ada7d267883d07c20160809-4697-ua7xq5.jpg'
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO `parkinglots` (`name`, `address`, `addressreference`, `pricinghour`, `pricingday`, `businesshours`, `camera`, `security`, `user_id`, `ubigeo_id`, `nearby_id`, `avatar_file_name`, `avatar_content_type`, `avatar_file_size`, `avatar_updated_at`, `created_at`, `updated_at`) VALUES ('Los Portales - Aeropuerto', 'Av. Elmer Fauceet 4012', 'Alt. Cdr. 30. Bocanegra', 6, 50, 'LD : 24 horas', 0, 1, 1, 33, 1, 'Aeropuerto.jpg', 'image/jpeg', 84858, '2016-08-09 23:23:34', '2016-08-09 23:23:35', '2016-08-09 23:23:35')
+  [1m[36m (9.7ms)[0m  [1mCOMMIT[0m
+Redirected to https://instaparking-ricardoblas.c9users.io/parkinglots/2
+Completed 302 Found in 277ms (ActiveRecord: 10.8ms)
+
+
+Started GET "/parkinglots/2" for 200.0.118.173 at 2016-08-09 23:23:35 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mParkinglot Load (0.5ms)[0m  SELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 2 LIMIT 1
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1
+  [1m[36mUbigeo Load (0.3ms)[0m  [1mSELECT  `ubigeos`.* FROM `ubigeos` WHERE `ubigeos`.`id` = 33 LIMIT 1[0m
+  [1m[35mNearby Load (0.2ms)[0m  SELECT  `nearbies`.* FROM `nearbies` WHERE `nearbies`.`id` = 1 LIMIT 1
+  Rendered parkinglots/show.html.erb within layouts/application (9.5ms)
+  [1m[36mProfile Load (0.6ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.4ms)
+  Rendered layouts/_menu.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 167ms (Views: 161.2ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:23:35 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (12.5ms)
+  Rendered layouts/_authentication.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 164ms (Views: 163.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:23:36 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (13.8ms)
+  Rendered layouts/_authentication.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 181ms (Views: 180.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/pages/be_promoted" for 200.0.118.173 at 2016-08-09 23:23:42 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#be_promoted as HTML
+  [1m[35mParkinglot Load (0.4ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  Rendered pages/be_promoted.html.erb within layouts/internal (2.7ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (0.2ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (3.7ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 239ms (Views: 237.2ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/reservations" for 200.0.118.173 at 2016-08-09 23:24:13 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mReservation Load (0.2ms)[0m  SELECT `reservations`.* FROM `reservations`
+  [1m[36mParkinglot Load (0.4ms)[0m  [1mSELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 1 LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1
+  Rendered reservations/index.html.erb within layouts/application (11.3ms)
+  [1m[36mProfile Load (0.3ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (1.9ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 170ms (Views: 166.0ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/reservations/new" for 200.0.118.173 at 2016-08-09 23:24:19 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#new as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mParkinglot Load (0.3ms)[0m  [1mSELECT `parkinglots`.* FROM `parkinglots`[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT `users`.* FROM `users`
+  Rendered reservations/_form.html.erb (57.4ms)
+  Rendered reservations/new.html.erb within layouts/application (60.5ms)
+  [1m[36mProfile Load (0.3ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.0ms)
+  Rendered layouts/_menu.html.erb (0.7ms)
+  Rendered layouts/_menu.html.erb (2.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 229ms (Views: 225.1ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/parkinglots" for 200.0.118.173 at 2016-08-09 23:25:00 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/KrJvbk+11b60Wh16JtIImJEr82822vhg/2Ble+/+TXcDQW+pB8Efadb7Mi6KQneMtZcr9hqvGppbjlrhS5Fyw==", "parkinglot"=>{"name"=>"Plaza Lima Sur", "address"=>"Av. Prolongación Paseo de la República s/n- CHORRILLOS", "addressreference"=>"CC Plaza Lima Sur", "pricinghour"=>"6.00", "pricingday"=>"36.00", "businesshours"=>"24", "camera"=>"1", "security"=>"1", "user_id"=>"2", "ubigeo_id"=>"7", "nearby_id"=>"4", "avatar"=>#<ActionDispatch::Http::UploadedFile:0x007f28c6729480 @tempfile=#<Tempfile:/tmp/RackMultipart20160809-4697-4xhx9r.jpg>, @original_filename="ripley.jpg", @content_type="image/jpeg", @headers="Content-Disposition: form-data; name=\"parkinglot[avatar]\"; filename=\"ripley.jpg\"\r\nContent-Type: image/jpeg\r\n">}, "commit"=>"Create Parkinglot"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 2  ORDER BY `users`.`id` ASC LIMIT 1
+Command :: file -b --mime '/tmp/93546dddcbc6d565b470fafc5265465a20160809-4697-vxo0mj.jpg'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/93546dddcbc6d565b470fafc5265465a20160809-4697-eh5uq4.jpg[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/93546dddcbc6d565b470fafc5265465a20160809-4697-eh5uq4.jpg[0]'
+Command :: convert '/tmp/93546dddcbc6d565b470fafc5265465a20160809-4697-eh5uq4.jpg[0]' -auto-orient -resize "300x300>" '/tmp/c9efb714b759ead693b4d42d8426914620160809-4697-fjutoq'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/93546dddcbc6d565b470fafc5265465a20160809-4697-eh5uq4.jpg[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/93546dddcbc6d565b470fafc5265465a20160809-4697-eh5uq4.jpg[0]'
+Command :: convert '/tmp/93546dddcbc6d565b470fafc5265465a20160809-4697-eh5uq4.jpg[0]' -auto-orient -resize "100x100>" '/tmp/c9efb714b759ead693b4d42d8426914620160809-4697-16x6pay'
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+Command :: file -b --mime '/tmp/93546dddcbc6d565b470fafc5265465a20160809-4697-28yuei.jpg'
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO `parkinglots` (`name`, `address`, `addressreference`, `pricinghour`, `pricingday`, `businesshours`, `camera`, `security`, `user_id`, `ubigeo_id`, `nearby_id`, `avatar_file_name`, `avatar_content_type`, `avatar_file_size`, `avatar_updated_at`, `created_at`, `updated_at`) VALUES ('Plaza Lima Sur', 'Av. Prolongación Paseo de la República s/n- CHORRILLOS', 'CC Plaza Lima Sur', 6, 36, '24', 1, 1, 2, 7, 4, 'ripley.jpg', 'image/jpeg', 67996, '2016-08-09 23:25:00', '2016-08-09 23:25:00', '2016-08-09 23:25:00')
+  [1m[36m (7.6ms)[0m  [1mCOMMIT[0m
+Redirected to https://instaparking-ricardoblas.c9users.io/parkinglots/3
+Completed 302 Found in 355ms (ActiveRecord: 8.6ms)
+
+
+Started GET "/parkinglots/3" for 200.0.118.173 at 2016-08-09 23:25:01 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[35mParkinglot Load (0.5ms)[0m  SELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 3 LIMIT 1
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 2  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 2 LIMIT 1
+  [1m[36mUbigeo Load (0.3ms)[0m  [1mSELECT  `ubigeos`.* FROM `ubigeos` WHERE `ubigeos`.`id` = 7 LIMIT 1[0m
+  [1m[35mNearby Load (0.2ms)[0m  SELECT  `nearbies`.* FROM `nearbies` WHERE `nearbies`.`id` = 4 LIMIT 1
+  Rendered parkinglots/show.html.erb within layouts/application (9.7ms)
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 2 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.9ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 205ms (Views: 200.4ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/pages/be_promoted" for 200.0.118.173 at 2016-08-09 23:25:03 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#be_promoted as HTML
+  [1m[35mParkinglot Load (3.0ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  Rendered pages/be_promoted.html.erb within layouts/internal (5.6ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 2  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (3.3ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 2 LIMIT 1
+  Rendered layouts/_authentication.html.erb (6.6ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 214ms (Views: 206.9ms | ActiveRecord: 6.5ms)
+
+
+Started POST "/reservations" for 200.0.118.173 at 2016-08-09 23:25:15 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"kiTqhCGj/dXHcOt5XB8Rl8uuK9KWLXDWwNFiY52EiIfP8enw7TzBUOTF9NfEFqGPo3lCp0WWdiLcllA5079ixg==", "reservation"=>{"datestart(1i)"=>"2016", "datestart(2i)"=>"8", "datestart(3i)"=>"9", "timestart(1i)"=>"2016", "timestart(2i)"=>"8", "timestart(3i)"=>"9", "timestart(4i)"=>"21", "timestart(5i)"=>"00", "dateend(1i)"=>"2016", "dateend(2i)"=>"8", "dateend(3i)"=>"9", "timeend(1i)"=>"2016", "timeend(2i)"=>"8", "timeend(3i)"=>"9", "timeend(4i)"=>"22", "timeend(5i)"=>"00", "byhour"=>"1", "byday"=>"0", "parkinglot_id"=>"2", "user_id"=>"1"}, "commit"=>"Create Reservation"}
+  [1m[36mUser Load (107.1ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO `reservations` (`byhour`, `byday`, `parkinglot_id`, `user_id`, `datestart`, `timestart`, `dateend`, `timeend`, `created_at`, `updated_at`) VALUES (1, 0, 2, 1, '2016-08-09', '2016-08-09 21:00:00.000000', '2016-08-09', '2016-08-09 22:00:00.000000', '2016-08-09 23:25:15', '2016-08-09 23:25:15')[0m
+  [1m[35m (5.2ms)[0m  COMMIT
+Redirected to https://instaparking-ricardoblas.c9users.io/reservations/2
+Completed 302 Found in 122ms (ActiveRecord: 113.1ms)
+
+
+Started GET "/reservations/2" for 200.0.118.173 at 2016-08-09 23:25:15 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mReservation Load (0.5ms)[0m  [1mSELECT  `reservations`.* FROM `reservations` WHERE `reservations`.`id` = 2 LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mParkinglot Load (0.5ms)[0m  [1mSELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 2 LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1
+  Rendered reservations/show.html.erb within layouts/application (5.2ms)
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.5ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 186ms (Views: 180.8ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:25:16 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (10.1ms)
+  Rendered layouts/_authentication.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 208ms (Views: 207.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:25:16 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (29.3ms)
+  Rendered layouts/_authentication.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.8ms)
+  Rendered layouts/_menu.html.erb (0.6ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 213ms (Views: 212.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:25:16 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (10.6ms)
+  Rendered layouts/_authentication.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 179ms (Views: 178.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/reservations" for 200.0.118.173 at 2016-08-09 23:25:18 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mReservation Load (90.9ms)[0m  [1mSELECT `reservations`.* FROM `reservations`[0m
+  [1m[35mParkinglot Load (0.6ms)[0m  SELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 1 LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+  [1m[35mParkinglot Load (0.2ms)[0m  SELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 2 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m  [["id", 1]]
+  Rendered reservations/index.html.erb within layouts/application (104.1ms)
+  [1m[35mProfile Load (0.2ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (1.8ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 313ms (Views: 216.8ms | ActiveRecord: 92.4ms)
+
+
+Started GET "/reservations" for 200.0.118.173 at 2016-08-09 23:25:41 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ReservationsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 2  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mReservation Load (0.3ms)[0m  SELECT `reservations`.* FROM `reservations`
+  [1m[36mParkinglot Load (0.2ms)[0m  [1mSELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 1 LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1
+  [1m[36mParkinglot Load (0.2ms)[0m  [1mSELECT  `parkinglots`.* FROM `parkinglots` WHERE `parkinglots`.`id` = 2 LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1  [["id", 1]]
+  Rendered reservations/index.html.erb within layouts/application (10.1ms)
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 2 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.3ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 335ms (Views: 329.8ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/pages/be_promoted" for 200.0.118.173 at 2016-08-09 23:26:11 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#be_promoted as HTML
+  [1m[35mParkinglot Load (0.3ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  Rendered pages/be_promoted.html.erb within layouts/internal (128.5ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 2  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (0.2ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 2 LIMIT 1
+  Rendered layouts/_authentication.html.erb (3.6ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 364ms (Views: 361.7ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/pages/be_promoted" for 200.0.118.173 at 2016-08-09 23:26:12 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#be_promoted as HTML
+  [1m[36mParkinglot Load (0.2ms)[0m  [1mSELECT `parkinglots`.* FROM `parkinglots`[0m
+  Rendered pages/be_promoted.html.erb within layouts/internal (3.8ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 2  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 2 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (5.0ms)
+  Rendered layouts/_menu.html.erb (0.8ms)
+  Rendered layouts/_menu.html.erb (1.2ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 212ms (Views: 210.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/pages/be_promoted" for 200.0.118.173 at 2016-08-09 23:26:23 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#be_promoted as HTML
+  [1m[35mParkinglot Load (0.3ms)[0m  SELECT `parkinglots`.* FROM `parkinglots`
+  Rendered pages/be_promoted.html.erb within layouts/internal (4.1ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mProfile Load (0.3ms)[0m  SELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1
+  Rendered layouts/_authentication.html.erb (7.5ms)
+  Rendered layouts/_menu.html.erb (0.8ms)
+  Rendered layouts/_menu.html.erb (0.8ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 263ms (Views: 260.8ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/parkinglots/new" for 200.0.118.173 at 2016-08-09 23:26:46 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ParkinglotsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 2  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT `users`.* FROM `users`
+  [1m[36mUbigeo Load (0.2ms)[0m  [1mSELECT `ubigeos`.* FROM `ubigeos`[0m
+  [1m[35mNearby Load (0.3ms)[0m  SELECT `nearbies`.* FROM `nearbies`
+  Rendered parkinglots/_form.html.erb (136.8ms)
+  Rendered parkinglots/new.html.erb within layouts/application (140.1ms)
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 2 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (2.0ms)
+  Rendered layouts/_menu.html.erb (0.6ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 309ms (Views: 305.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/images/images/medium/missing.png" for 200.0.118.173 at 2016-08-09 23:26:47 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+ActionController::RoutingError (No route matches [GET] "/images/images/medium/missing.png"):
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:20:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (6.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (3.8ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.0ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (179.3ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:29:24 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (15.2ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (4.9ms)
+  Rendered layouts/_menu.html.erb (0.8ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 271ms (Views: 269.4ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 200.0.118.173 at 2016-08-09 23:29:31 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#index as HTML
+  Rendered pages/index.html.erb within layouts/application (10.5ms)
+  Rendered layouts/_authentication.html.erb (0.7ms)
+  Rendered layouts/_menu.html.erb (0.7ms)
+  Rendered layouts/_menu.html.erb (1.6ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 282ms (Views: 281.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/pages/contact_us" for 200.0.118.173 at 2016-08-09 23:29:32 +0000
+Cannot render console from 200.0.118.173! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#contact_us as HTML
+  Rendered pages/_map.html.erb (0.4ms)
+  Rendered pages/contact_us.html.erb within layouts/internal (4.9ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (5.0ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (1.0ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 197ms (Views: 196.2ms | ActiveRecord: 0.5ms)
