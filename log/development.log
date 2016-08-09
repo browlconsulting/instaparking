@@ -7226,3 +7226,209 @@ Processing by ReservationsController#new as HTML
   Rendered layouts/_menu.html.erb (0.4ms)
   Rendered layouts/_footer.erb (0.1ms)
 Completed 200 OK in 202ms (Views: 198.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/pages/search" for 200.62.171.227 at 2016-08-09 18:53:09 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by PagesController#search as HTML
+  [1m[35mUbigeo Load (0.2ms)[0m  SELECT `ubigeos`.* FROM `ubigeos`
+  [1m[36mNearby Load (0.3ms)[0m  [1mSELECT `nearbies`.* FROM `nearbies`[0m
+  Rendered pages/search.html.erb within layouts/internal (55.1ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mProfile Load (0.6ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (131.9ms)
+  Rendered layouts/_menu.html.erb (1.0ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_footer.erb (0.4ms)
+Completed 200 OK in 1186ms (Views: 1153.1ms | ActiveRecord: 13.3ms)
+
+
+Started GET "/pages/search" for 200.62.171.227 at 2016-08-09 18:53:14 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#search as HTML
+  [1m[35mUbigeo Load (0.2ms)[0m  SELECT `ubigeos`.* FROM `ubigeos`
+  [1m[36mNearby Load (0.2ms)[0m  [1mSELECT `nearbies`.* FROM `nearbies`[0m
+  Rendered pages/search.html.erb within layouts/internal (6.4ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (4.4ms)
+  Rendered layouts/_menu.html.erb (0.5ms)
+  Rendered layouts/_menu.html.erb (0.9ms)
+  Rendered layouts/_footer.erb (0.1ms)
+Completed 200 OK in 385ms (Views: 383.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/pages/search" for 200.62.171.227 at 2016-08-09 18:53:30 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PagesController#search as HTML
+  [1m[35mUbigeo Load (0.2ms)[0m  SELECT `ubigeos`.* FROM `ubigeos`
+  [1m[36mNearby Load (0.2ms)[0m  [1mSELECT `nearbies`.* FROM `nearbies`[0m
+  Rendered pages/search.html.erb within layouts/internal (12.9ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 1  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT  `profiles`.* FROM `profiles` WHERE `profiles`.`user_id` = 1 LIMIT 1[0m
+  Rendered layouts/_authentication.html.erb (4.0ms)
+  Rendered layouts/_menu.html.erb (0.4ms)
+  Rendered layouts/_menu.html.erb (0.3ms)
+  Rendered layouts/_footer.erb (0.0ms)
+Completed 200 OK in 239ms (Views: 237.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/assets/bootstrap_and_overrides.self-d7ea915e87a1932505041610b95fce4d30e49eec0e45e8949850a9fd2bd564e0.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/nearbies.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/feedbacks.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pages.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/parkinglots.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/profiles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/reservations.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/scaffolds.self-099cd90777efec4f3359cfc90b7a640e333e7dffe1d4a8fbb1b4f0c45c442db2.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/special_features.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/ubigeos.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/userinteractions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/transition.self-db278e3a8fa6249c16796b113ebd29e11ef4e2cd021618ed84895d524a4511e0.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/alert.self-ebce91ec66c71bcee451ea7da9128fd1bf8faa02c6d22ea04c598423431e4c08.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/modal.self-ab1767545e27c0dbd36971e656ae4927171f673e3d932cdec2cbef39e991952b.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/dropdown.self-8bb9309b6c24a4ba6b94026a049d25b13bdc0553b6fe83255c14a715ba624cc4.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/scrollspy.self-bd0c6724cdc75302fe98dfeff923112b76c1673cf4a0752a7050b7feea15594c.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/tab.self-7e3ee4a243bb416b5f0111a0be08f8547c5d72ba71fe4afe4a4a007f5cb4e10e.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/tooltip.self-d7f9330825307d053f68da11bb9ddc9b070df72deef3d115f2f3d55f66b17457.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/popover.self-cd672ecad3b549e1dbd89bfd044e5812d6fdade56f42d48e3acee0c3f4614526.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/button.self-ceb562de883e04359bb2c06f07bdf6ecf065cc8a5027e2e58857c5e91b0b68e3.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/collapse.self-a87553101c955a01e2e8c81fad69a16582ddbf58fe95d5eb335dde5567af7647.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/carousel.self-5d09995e01b647168888180d40e271f9a6759d68ae7ac029d7026af58813d376.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap/affix.self-14e04bbe71282aa039322ab93e3a3a886ddede5f59a2f365f7c861f697bbeb21.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/twitter/bootstrap.self-fbfa5ad7d9aa0afe439ec4ff3883acc4cb92b62cb67c40d674320c9aa1d4642d.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/turbolinks.self-c5acd7a204f5f25ce7a1d8a0e4d92e28d34c9e2df2c7371cd7af88e147e4ad82.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap.self-fdc98dee79ee88255e10cac6caa91338165cb76cf0d263744d8d90011fc2ef8f.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/feedbacks.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/nearbies.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/pages.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/parkinglots.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/profiles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/reservations.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/special_features.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/ubigeos.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:31 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/userinteractions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:32 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/application.self-f8806224e027f3e3f0138ea9ce99319e298dfdb323304d1f1be6eae8e8c74724.js?body=1" for 200.62.171.227 at 2016-08-09 18:53:32 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/fontawesome-webfont-adbc4f95eb6d7f2738959cf0ecbc374672fce47e856050a8e9791f457623ac2c.woff" for 200.62.171.227 at 2016-08-09 18:53:32 +0000
+Cannot render console from 200.62.171.227! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
